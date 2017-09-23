@@ -1,11 +1,11 @@
 "--------------------
 "" 基本的な設定
 "--------------------
-""新しい行のインデントを現在行と同じにする
-set autoindent
-
 "vi互換をオフする
 set nocompatible
+
+""新しい行のインデントを現在行と同じにする
+set autoindent
 
 "新しい行を作った時に高度な自動インデントを行う
 set smarttab
@@ -88,13 +88,13 @@ set softtabstop=2
 " ファイル内にあるタブ文字の表示幅
 set tabstop=2
 " ツールバーを非表示にする
-set guioptions-=T
+"set guioptions-=T
 " yでコピーした時にクリップボードに入る
-set guioptions+=a
+"set guioptions+=a
 " メニューバーを非表示にする
-set guioptions-=m
+"set guioptions-=m
 " 右スクロールバーを非表示
-set guioptions+=R
+"set guioptions+=R
 " 改行時に入力された行の末尾に合わせて次の行のインデントを増減する
 set smartindent
 " スワップファイルを作成しない
@@ -105,6 +105,8 @@ set nofoldenable
 set title
 " 行番号の表示
 set number
+" カーソルが何行目に置かれているか表示
+set ruler
 " ヤンクでクリップボードにコピー
 set clipboard=unnamed,autoselect
 " Escの2回押しでハイライト消去
@@ -112,9 +114,9 @@ nnoremap <Esc><Esc> :nohlsearch<CR><ESC>
 " シンタックスハイライト
 syntax on
 " すべての数を10進数として扱う
-set nrformats=
+"set nrformats=
 " 行をまたいで移動
-set whichwrap=b,s,h,l,<,>,[,],~
+"set whichwrap=b,s,h,l,<,>,[,],~
 " バッファスクロール
 set mouse=a
 
@@ -152,3 +154,5 @@ if has("autocmd")
   augroup END
 endif
 
+" 折り返しを無効にする
+set nowrap
