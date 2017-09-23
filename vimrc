@@ -108,7 +108,7 @@ set number
 " カーソルが何行目に置かれているか表示
 set ruler
 " ヤンクでクリップボードにコピー
-set clipboard=unnamed,autoselect
+"set clipboard=unnamed,autoselect
 " Escの2回押しでハイライト消去
 nnoremap <Esc><Esc> :nohlsearch<CR><ESC>
 " シンタックスハイライト
@@ -118,7 +118,7 @@ syntax on
 " 行をまたいで移動
 "set whichwrap=b,s,h,l,<,>,[,],~
 " バッファスクロール
-set mouse=a
+"set mouse=a
 
 " auto reload .vimrc
 augroup source-vimrc
