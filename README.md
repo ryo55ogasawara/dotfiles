@@ -15,3 +15,19 @@ vimrcを.origと.emacsに分離しました。
 基本的な設定を.origに記載するようにしました。
 zshrcも環境に応じた定義を.mineファイルに記載できるようにしました。
 
+★使用方法
+git clone https://github.com/ryo55ogasawara/dotfiles.git
+cd dotfiles
+./dotfilesLink.sh
+
+★修正方法(前設定)
+git config --global http.proxy http://[HTTPプロキシ]
+git config --global https.proxy https://[HTTPSプロキシ]
+git config --global user.name "[ユーザ名]"
+git config --global user.email "[メールアドレス]"
+
+★修正方法
+git add [修正ファイル]
+git commit -m '[コメント]'
+git push origin master
+
