@@ -1,76 +1,76 @@
-"���������ʸ��ñ�̰�ư
+"カーソル一文字単位移動
 inoremap <silent> <C-s> <Left>
 inoremap <silent> <C-d> <Right>
 
-"ñ��ñ�̰�ư
+"単語単位移動
 inoremap <silent> <C-f> <C-r>=MyMoveWord_i('w')<CR>
 inoremap <silent> <C-b> <C-r>=MyMoveWord_i('b')<CR>
 
-"���䴰���Ϲ԰�ư��j,k��Ʊ��ư��ˤ����䴰��ϸ�������
+"非補完時は行移動をj,kと同じ動作にして補完中は候補選択
 "inoremap <silent> <expr> <C-p>  pumvisible() ? "\<C-p>" : "<C-r>=MyExecExCommand('normal k')<CR>"
 "inoremap <silent> <expr> <C-n>  pumvisible() ? "\<C-n>" : "<C-r>=MyExecExCommand('normal j')<CR>"
 "inoremap <silent> <expr> <Up>   pumvisible() ? "\<C-p>" : "<C-r>=MyExecExCommand('normal k')<CR>"
 "inoremap <silent> <expr> <Down> pumvisible() ? "\<C-n>" : "<C-r>=MyExecExCommand('normal j')<CR>"
 
-"��Ƭ��
-inoremap <silent> <C-a> <C-r>=MyJumptoBol('�����������������֡�')<CR>
-"������
-inoremap <silent> <C-e> <C-r>=MyJumptoEol('�����������������֡�')<CR>
+"行頭へ
+inoremap <silent> <C-a> <C-r>=MyJumptoBol('　。、．，／！？「」')<CR>
+"行末へ
+inoremap <silent> <C-e> <C-r>=MyJumptoEol('　。、．，／！？「」')<CR>
 
-"������������ʸ�����
+"カーソル前の文字削除
 inoremap <silent> <BS>  <C-g>u<BS>
 inoremap <silent> <C-h> <C-g>u<C-h>
-"����������ʸ�����
+"カーソル後の文字削除
 inoremap <silent> <Del> <C-g>u<Del>
 inoremap <silent> <C-g> <C-g>u<Del>
 
-"����������֤�������ñ�����
+"カーソル位置から前の単語を削除
 inoremap <silent> <C-w> <C-g>u<C-r>=MyExecExCommand('normal! db')<CR>
-"����������֤�����ñ�����
+"カーソル位置から後の単語を削除
 inoremap <silent> <C-t> <C-g>u<C-r>=MyDeleteWord()<CR>
 
-"�Ǹ����������ʸ���������
+"最後に挿入した文字列を挿入
 inoremap <silent> <C-z> <C-g>u<C-a>
 
-"���߹Ԥ򥤥�ǥ��
+"現在行をインデント
 inoremap <silent> <Tab>   <C-g>u<C-t>
 inoremap <silent> <S-Tab> <C-g>u<C-d>
 
 "undo
 inoremap <silent> <C-u> <C-g>u<C-r>=MyExecExCommand('u', 'onemore')<CR>
 
-"�����ȥ�������������
+"２ストロークキー使用
 if 1
-  "��������ʹߺ��
+  "カーソル以降削除
   inoremap <silent> <C-k><C-k> <C-g>u<C-r>=MyExecExCommand('normal! D', 'onemore')<CR>
   "redo
-  "FIXME:<C-r>(��ɥ�)�ϥ��ޥ�ɥ饤�󤫤�exec�Ǽ¹Ԥ���ȿ������ݤʤΤǲ�����
+  "FIXME:<C-r>(リドゥ)はコマンドラインからexecで実行すると色々面倒なので回避用
   nnoremap g\\z <C-r>
   inoremap <silent> <C-k><C-r> <C-r>=MyExecExCommand('normal g\\z', 'onemore')<CR>
-  "��Ϣ��
+  "行連結
   inoremap <silent> <C-k><C-j> <C-g>u<C-r>=MyExecExCommand('normal! J')<CR>
-  "��������
+  "新行挿入
   inoremap <silent> <C-k><C-n> <C-g>u<C-r>=MyExecExCommand("call cursor(line('.'), col('$'))")<CR><CR>
 endif
 
-"�᥿(alt)��������
+"メタ(alt)キー使用
 if 0
-  "��������ʹߺ��
+  "カーソル以降削除
   inoremap <silent> <C-k> <C-g>u<C-r>=MyExecExCommand('normal! D', 'onemore')<CR>
-  "��ɥ�
-  "FIXME:<C-r>(��ɥ�)�ϥ��ޥ�ɥ饤�󤫤�exec�Ǽ¹Ԥ���ȿ������ݤʤΤǲ�����
+  "リドゥ
+  "FIXME:<C-r>(リドゥ)はコマンドラインからexecで実行すると色々面倒なので回避用
   nnoremap g\\z <C-r>
   inoremap <silent> <M-r> <C-r>=MyExecExCommand('normal g\\z', 'onemore')<CR>
-  "��Ϣ��
+  "行連結
   inoremap <silent> <M-j> <C-g>u<C-r>=MyExecExCommand('normal! J')<CR>
-  "��������
+  "新行挿入
   inoremap <silent> <M-n> <C-g>u<C-r>=MyExecExCommand("call cursor(line('.'), col('$'))")<CR><CR>
 endif
 
 """"""""""""""""""""""""""""""
-"sep�����Ǥʤ���С�sep�򥻥ѥ졼���Ȥ��ƥ����ס�
-"���Ĥ���ʤ���и������ι�Ƭ�ء�
-"����������֤��������ι�Ƭ�ξ��Ͽ��ι�Ƭ�ء�
+"sepが空でなければ、sepをセパレータとしてジャンプ。
+"見つからなければ見かけの行頭へ。
+"カーソル位置が見かけの行頭の場合は真の行頭へ。
 """"""""""""""""""""""""""""""
 function! MyJumptoBol(sep)
   if col('.') == 1
@@ -94,8 +94,8 @@ function! MyJumptoBol(sep)
 endfunction
 
 """"""""""""""""""""""""""""""
-"sep�����Ǥʤ���С�sep�򥻥ѥ졼���Ȥ��ƥ����ס�
-"���Ĥ���ʤ���й����ء�
+"sepが空でなければ、sepをセパレータとしてジャンプ。
+"見つからなければ行末へ。
 """"""""""""""""""""""""""""""
 function! MyJumptoEol(sep)
   if col('.') == col('$')
@@ -115,7 +115,7 @@ function! MyJumptoEol(sep)
 endfunction
 
 """"""""""""""""""""""""""""""
-"�����Ǥ���ߤ���ñ��ñ�̰�ư���ޥ��
+"行末でも停止する単語単位移動コマンド
 """"""""""""""""""""""""""""""
 function! MyMoveWord_i(cmd)
   let isEol = 0
@@ -147,7 +147,7 @@ function! MyMoveWord_i(cmd)
 endfunction
 
 """"""""""""""""""""""""""""""
-"��������ʹߤ�ñ����
+"カーソル以降の単語削除
 """"""""""""""""""""""""""""""
 function! MyDeleteWord()
   if col('.') == col('$')
@@ -165,7 +165,7 @@ function! MyDeleteWord()
 endfunction
 
 """"""""""""""""""""""""""""""
-"IME�ξ��֤ȥ������������¸�Τ���<C-r>����Ѥ��ƥ��ޥ�ɤ�¹ԡ�
+"IMEの状態とカーソル位置保存のため<C-r>を使用してコマンドを実行。
 """"""""""""""""""""""""""""""
 function! MyExecExCommand(cmd, ...)
   let saved_ve = &virtualedit
@@ -183,6 +183,6 @@ function! MyExecExCommand(cmd, ...)
   endif
   return ''
 endfunction
-"FIXME:<C-r>(��ɥ�)�ϥ��ޥ�ɥ饤�󤫤�exec�Ǽ¹Ԥ���ȿ������ݤʤΤǲ�����
+"FIXME:<C-r>(リドゥ)はコマンドラインからexecで実行すると色々面倒なので回避用
 nnoremap g\\z <C-r>
 

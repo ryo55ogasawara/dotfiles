@@ -96,7 +96,23 @@ setopt mark_dirs
 ## 最後のスラッシュを自動的に削除しない
 setopt noautoremoveslash
 
+## auto change directory
+#setopt auto_cd
+## auto directory pushd that you can get dirs list by cd -[tab]
+setopt auto_pushd
+## no beep sound when complete list displayed
+setopt nolistbeep
+
+## Alias configuration
+#
+## expand aliases before completing
+setopt complete_aliases     # aliased ls needs if file/dir completions work
 
 alias ls="ls -G"
 alias la="ls -Ga"
 alias ll="ls -Gl"
+
+## load user .zshrc configuration file
+#
+[ -f ${HOME}/.zshrc.mine ] && source ${HOME}/.zshrc.mine
+
