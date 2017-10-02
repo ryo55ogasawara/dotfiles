@@ -1,9 +1,12 @@
 " -------------------
 " 元ファイル 
 " -------------------
-source ~/.vimrc.orig
-"source ~/.vimrc.emacs
-
+if filereadable( $HOME . "/.vimrc.orig" )
+  source ~/.vimrc.orig
+endif
+"if filereadable( $HOME . "/.vimrc.emacs" )
+"  source ~/.vimrc.emacs
+"endif
 
 " -------------------
 " vim-ruby/rails
@@ -69,3 +72,9 @@ if has("autocmd")
 endif
 
 
+" -------------------
+" 個別設定ファイル 
+" -------------------
+if filereadable( $HOME . "/.vimrc.mine" )
+  source ~/.vimrc.mine
+endif
