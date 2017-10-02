@@ -1,3 +1,5 @@
 #!/bin/sh
-ln -fs ~/dotfiles/vimrc ~/.vimrc
-ln -fs ~/dotfiles/zshrc ~/.zshrc
+ln -fs $(cd $(dirname $0) && pwd)/vimrc ~/.vimrc
+ln -fs $(cd $(dirname $0) && pwd)/vimrc.orig ~/.vimrc.orig
+ln -fs $(cd $(dirname $0) && pwd)/vimrc.emacs ~/.vimrc.emacs
+ln -fs $(cd $(dirname $0) && pwd)/zshrc ~/.zshrc

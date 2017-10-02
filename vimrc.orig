@@ -1,0 +1,194 @@
+"--------------------
+"" 基本的な設定
+"--------------------
+"vi互換をオフする
+set nocompatible
+""新しい行のインデントを現在行と同じにする
+set autoindent
+"新しい行を作った時に高度な自動インデントを行う
+set smarttab
+" ファイルを上書きする前にバックアップを作ることを無効化
+set nowritebackup
+" ファイルを上書きする前にバックアップを作ることを無効化
+set nobackup
+" vim の矩形選択で文字が無くても右へ進める
+set virtualedit=block
+" 挿入モードでバックスペースで削除できるようにする
+set backspace=indent,eol,start
+" 全角文字専用の設定
+set ambiwidth=double
+" wildmenuオプションを有効(vimバーからファイルを選択できる)
+set wildmenu
+"ステータスラインに文字コードと改行文字を表示する
+set statusline=\ %<%f\ %m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%l,%c%V%8P
+" 現在のモードを表示する
+set showmode
+" ヴィジュアルベルを鳴らさない(鳴らす場合は，visualbellのみ)
+set visualbell t_vb=
+" コマンドラインの履歴を10000件保存する
+set history=10000
+
+"--------------------
+"" 日本語設定
+"--------------------
+" 全角スペースの表示
+function! ZenkakuSpace()
+    highlight ZenkakuSpace cterm=reverse ctermfg=DarkGray gui=reverse guifg=DarkGray
+endfunction
+if has('syntax')
+    augroup ZenkakuSpace
+        autocmd!
+        "ZenkakuSpace をカラーファイルで設定するなら、
+        "次の行をコメントアウト
+        autocmd ColorScheme       * call ZenkakuSpace()
+        autocmd VimEnter,WinEnter * match ZenkakuSpace /　/
+    augroup END
+    call ZenkakuSpace()
+endif
+
+
+" 文字コードの自動認識
+if &encoding !=# 'utf-8'
+  set encoding=japan
+  set fileencoding=japan
+endif
+if has('iconv')
+  let s:enc_euc = 'euc-jp'
+  let s:enc_jis = 'iso-2022-jp'
+  " iconvがeucJP-msに対応しているかをチェック
+  if iconv("\x87\x64\x87\x6a", 'cp932', 'eucjp-ms') ==# "\xad\xc5\xad\xcb"
+    let s:enc_euc = 'eucjp-ms'
+    let s:enc_jis = 'iso-2022-jp-3'
+  " iconvがJISX0213に対応しているかをチェック
+  elseif iconv("\x87\x64\x87\x6a", 'cp932', 'euc-jisx0213') ==# "\xad\xc5\xad\xcb"
+    let s:enc_euc = 'euc-jisx0213'
+    let s:enc_jis = 'iso-2022-jp-3'
+  endif
+  " fileencodingsを構築
+  if &encoding ==# 'utf-8'
+    let s:fileencodings_default = &fileencodings
+    let &fileencodings = s:enc_jis .','. s:enc_euc .',cp932'
+    let &fileencodings = &fileencodings .','. s:fileencodings_default
+    unlet s:fileencodings_default
+  else
+    let &fileencodings = &fileencodings .','. s:enc_jis
+    set fileencodings+=utf-8,ucs-2le,ucs-2
+    if &encoding =~# '^\(euc-jp\|euc-jisx0213\|eucjp-ms\)$'
+      set fileencodings+=cp932
+      set fileencodings-=euc-jp
+      set fileencodings-=euc-jisx0213
+      set fileencodings-=eucjp-ms
+      let &encoding = s:enc_euc
+      let &fileencoding = s:enc_euc
+    else
+      let &fileencodings = &fileencodings .','. s:enc_euc
+    endif
+  endif
+  " 定数を処分
+  unlet s:enc_euc
+  unlet s:enc_jis
+endif
+" 日本語を含まない場合は fileencoding に encoding を使うようにする
+if has('autocmd')
+  function! AU_ReCheck_FENC()
+    if &fileencoding =~# 'iso-2022-jp' && search("[^\x01-\x7e]", 'n') == 0
+      let &fileencoding=&encoding
+    endif
+  endfunction
+  autocmd BufReadPost * call AU_ReCheck_FENC()
+endif
+" 改行コードの自動認識
+set fileformats=unix,dos,mac
+" □とか○の文字があってもカーソル位置がずれないようにする
+if exists('&ambiwidth')
+  set ambiwidth=double
+endif
+
+
+"----------------------------------------
+" 検索
+"----------------------------------------
+" 検索するときに大文字小文字を区別しない
+set ignorecase
+" 小文字で検索すると大文字と小文字を無視して検索
+set smartcase
+" 検索がファイル末尾まで進んだら、ファイル先頭から再び検索
+set wrapscan
+" インクリメンタル検索 (検索ワードの最初の文字を入力した時点で検索が開始)
+set incsearch
+" 検索結果をハイライト表示
+set hlsearch
+
+"----------------------------------------
+" 表示設定
+"----------------------------------------
+" エラーメッセージの表示時にビープを鳴らさない
+set noerrorbells
+" Windowsでパスの区切り文字をスラッシュで扱う
+set shellslash
+" 対応する括弧やブレースを表示
+set showmatch matchtime=1
+" インデント方法の変更
+set cinoptions+=:0
+" メッセージ表示欄を2行確保
+set cmdheight=2
+" ステータス行を常に表示
+set laststatus=2
+" ウィンドウの右下にまだ実行していない入力中のコマンドを表示
+set showcmd
+" 省略されずに表示
+set display=lastline
+" タブ文字を CTRL-I で表示し、行末に $ で表示する
+"set list
+" 行末のスペースを可視化
+set listchars=tab:^\ ,trail:~
+" コメントの色を水色
+hi Comment ctermfg=3
+" 入力モードでTabキー押下時に半角スペースを挿入
+"set expandtab
+" ファイル内にあるタブ文字の表示幅
+set tabstop=2
+" インデント幅
+set shiftwidth=2
+" タブキー押下時に挿入される文字幅を指定
+" 0ならtabstopで指定した値
+set softtabstop=0
+" ツールバーを非表示にする
+"set guioptions-=T
+" yでコピーした時にクリップボードに入る
+"set guioptions+=a
+" メニューバーを非表示にする
+"set guioptions-=m
+" 右スクロールバーを非表示
+"set guioptions+=R
+" 改行時に入力された行の末尾に合わせて次の行のインデントを増減する
+set smartindent
+" スワップファイルを作成しない
+set noswapfile
+" 検索にマッチした行以外を折りたたむ(フォールドする)機能
+set nofoldenable
+" タイトルを表示
+"set title
+" 行番号の表示
+set number
+" カーソルが何行目に置かれているか表示
+set ruler
+" ヤンクでクリップボードにコピー
+"set clipboard=unnamed,autoselect
+" Escの2回押しでハイライト消去
+nnoremap <Esc><Esc> :nohlsearch<CR><ESC>
+" シンタックスハイライト
+syntax on
+" すべての数を10進数として扱う
+"set nrformats=
+" 行をまたいで移動
+"set whichwrap=b,s,h,l,<,>,[,],~
+" バッファスクロール
+"set mouse=a
+" 折り返しを無効にする
+set nowrap
+" スクロール時の余白確保
+set scrolloff=5
+" テキスト挿入中の自動折り返しを日本語に対応させる
+set formatoptions+=mM
+
