@@ -25,6 +25,8 @@ git config --global http.proxy http://[HTTPプロキシ]
 git config --global https.proxy https://[HTTPSプロキシ]
 git config --global user.name "[ユーザ名]"
 git config --global user.email "[メールアドレス]"
+git remote set-url origin https://ryo55ogasawara@github.com/ryo55ogasawara/dotfiles.git
+unset SSH_ASKPASS
 
 ★修正方法
 git add [修正ファイル]
