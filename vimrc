@@ -20,7 +20,7 @@ filetype indent on
 filetype plugin on
 
 "" Ruby mode
-au FileType ruby :set nowrap tabstop=2 tw=0 sw=2
+au FileType ruby :set nowrap tabstop=2 tw=0 sw=2 expandtab
 au FileType html :set nowrap tabstop=2 tw=0 sw=2
 
 " オムニ補完
@@ -78,3 +78,4 @@ endif
 if filereadable( $HOME . "/.vimrc.mine" )
   source ~/.vimrc.mine
 endif
+

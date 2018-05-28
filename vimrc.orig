@@ -147,7 +147,7 @@ hi Comment ctermfg=3
 " 入力モードでTabキー押下時に半角スペースを挿入
 "set expandtab
 " ファイル内にあるタブ文字の表示幅
-set tabstop=2
+set tabstop=4
 " インデント幅
 set shiftwidth=2
 " タブキー押下時に挿入される文字幅を指定
