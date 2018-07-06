@@ -79,3 +79,4 @@ if filereadable( $HOME . "/.vimrc.mine" )
   source ~/.vimrc.mine
 endif
 
+set tags=~/tags
