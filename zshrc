@@ -10,7 +10,7 @@ setopt prompt_subst
 setopt transient_rprompt
 
 ## ${fg[...]} や $reset_color をロード
-autoload -U colors; colors
+autoload -Uz colors && colors
 
 # ブランチ名を色付きで表示させるメソッド
 function rprompt-git-current-branch {
@@ -55,26 +55,37 @@ SAVEHIST=1000000
 setopt hist_no_store
 ## すぐにヒストリファイルに追記する。
 setopt inc_append_history
+## ヒストリを共有
+setopt share_history
 ## 直前と同じコマンドをヒストリに追加しない
 setopt hist_ignore_dups
+## コマンドラインの先頭がスペースで始まる場合ヒストリに追加しない
+setopt hist_ignore_space
+## 余分なスペースを削除してヒストリに保存する
+setopt hist_reduce_blank
 ## zsh の開始, 終了時刻をヒストリファイルに書き込む
 setopt extended_history
 ## ヒストリを呼び出してから実行する間に一旦編集
 setopt hist_verify
-## ヒストリを共有
-setopt share_history
-## コマンドラインの先頭がスペースで始まる場合ヒストリに追加しない
-setopt hist_ignore_space
- 
+## historical backward/forward search with linehead string binded to ^P/^N
+autoload -U history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^p" history-beginning-search-backward-end
+bindkey "^n" history-beginning-search-forward-end
+bindkey "\\ep" history-beginning-search-backward-end
+bindkey "\\en" history-beginning-search-forward-end
+
 # 補完
-autoload -Uz compinit
-compinit
+autoload -Uz compinit && compinit
 ## The following lines were added by compinstall
 zstyle :compinstall filename '~/.zshrc'
 ## 補完候補を一覧表示
 setopt auto_list
 ## TAB で順に補完候補を切り替える
 setopt auto_menu
+## Shift-Tab で順に補完候補を逆順に切り替える
+bindkey "\e[Z" reverse-menu-complete
 ## 補完候補一覧でファイルの種別をマーク表示
 setopt list_types
 ## カッコの対応などを自動的に補完
