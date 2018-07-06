@@ -149,7 +149,7 @@ hi Comment ctermfg=3
 " ファイル内にあるタブ文字の表示幅
 set tabstop=4
 " インデント幅
-set shiftwidth=2
+set shiftwidth=4
 " タブキー押下時に挿入される文字幅を指定
 " 0ならtabstopで指定した値
 set softtabstop=0
