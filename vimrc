@@ -80,3 +80,6 @@ if filereadable( $HOME . "/.vimrc.mine" )
 endif
 
 set tags=~/tags
+
+colorscheme molokai
+

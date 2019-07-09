@@ -62,7 +62,7 @@ setopt hist_ignore_dups
 ## コマンドラインの先頭がスペースで始まる場合ヒストリに追加しない
 setopt hist_ignore_space
 ## 余分なスペースを削除してヒストリに保存する
-setopt hist_reduce_blank
+#setopt hist_reduce_blank
 ## zsh の開始, 終了時刻をヒストリファイルに書き込む
 setopt extended_history
 ## ヒストリを呼び出してから実行する間に一旦編集
