@@ -23,6 +23,7 @@
 ### 2019/07/09
 * vim: colorscheme molokaiに対応しました。
 * zsh: Cent7でエラーになる設定をコメントアウトしました。
+* screenに対応しました。
 
 ### 2018/07/06
 * vim: ctagsに対応しました。
